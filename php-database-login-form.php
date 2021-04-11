@@ -11,14 +11,12 @@
 	$Username = "user";
 	$Password = "123";
 	$dbname = "task";
-
-	echo "Mysqli object-oriented";
-	echo "<br>";
-
-	$conn1 = new mysqli($host, $Username, $Password, $dbname);
-	$stmt = "select ID, Username, Password from user";
-	$res = $conn1->query($stmt);
-	//$row = fetch_assoc($res);
+	session_start();
+	
+	$db = mysqli_connect($host, $Username, $Password, $dbname);
+	$sql = "select * from user where Username =='$Username'and Password =='$Password'";
+	$res = $db->query($sql);
+	$row = $res->mysqli_fetch_assoc($res);
 	if($row['Username']==$Username && $row['Password']==$Password)
 	{
 		echo "Login Successful! Welcome ".$row['Username'];
@@ -28,7 +26,7 @@
 		echo "Failed to login!";
 	}
 	
-	$conn1->close();
+	$db->close();
 	
 	?>
 </body>
